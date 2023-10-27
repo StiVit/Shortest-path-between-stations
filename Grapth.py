@@ -15,13 +15,15 @@ class UndergroundMap():
 
     def get_graph(self):
         return self.graph
-    
+
 map = UndergroundMap()
 map.create_data_base('London Underground data.xlsx')
 graph = map.get_graph()
-    
 
+
+# Task 2, e.g. Holdorn-Mile End
 shortest_path = nx.shortest_path_length(graph, source='Holborn', target='Mile End', weight='weight')
 print("Shortest travel time:", shortest_path)
+# Task 1, same example
 shortest_path = nx.shortest_path(graph, source='Holborn', target='Mile End', weight='weight')
 print("Shortest path:", shortest_path)
