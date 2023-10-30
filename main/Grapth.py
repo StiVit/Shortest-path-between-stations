@@ -1,29 +1,51 @@
 import pandas as pd
-import networkx as nx
+from adjacency_list_graph import AdjacencyListGraph
 
 class UndergroundMap():
+
     def __init__(self):
-        self.graph = nx.Graph()
+        # initialise the grapth
+        self.graph = AdjacencyListGraph(280, directed=False, weighted=True)
+        # initialise the station_index dictionary
+        self.stations = {}
 
     def create_data_base(self, path):
+        #read the data from excel
         self.data_set = pd.read_excel(path)
+
+        # initialise the dict for indexes as well as it's place in the dict
+        indexes = {}
+        place = 0
+        # iterate thorugh each of the rows in the data set
         for index, row in self.data_set.iterrows():
             station1 = row[1]
+
+            # check if the stations already have an index
+            if station1 not in indexes:
+                indexes[station1] = place
+                place += 1
             station2 = row[2]
+            if station2 not in indexes:
+                indexes[station2] = place
+                place += 1
             weight = row[3]
-            self.graph.add_edge(station1, station2, weight=weight)
+
+            # chech if the edge between two stations already exists, if not, create
+            if not self.graph.has_edge(indexes[station1], indexes[station2]):
+                self.graph.insert_edge(indexes[station1], indexes[station2], weight=weight)
+        self.stations = indexes
 
     def get_graph(self):
         return self.graph
 
+    def get_station_indexes(self):
+        return self.stations
+
 map = UndergroundMap()
 map.create_data_base('London Underground data.xlsx')
 graph = map.get_graph()
+stations = map.get_station_indexes()
 
 
-# Task 2, e.g. Holdorn-Mile End
-shortest_path = nx.shortest_path_length(graph, source='Holborn', target='Mile End', weight='weight')
-print("Shortest travel time:", shortest_path)
-# Task 1, same example
-shortest_path = nx.shortest_path(graph, source='Holborn', target='Mile End', weight='weight')
-print("Shortest path:", shortest_path)
+print(graph)
+print(stations)
