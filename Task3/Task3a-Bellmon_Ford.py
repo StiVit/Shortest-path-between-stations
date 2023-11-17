@@ -1,11 +1,10 @@
 from bellman_ford import bellman_ford
-import matplotlib.pyplot as plt
 import time
 import pandas as pd
 from adjacency_list_graph import AdjacencyListGraph
 
 
-class UndergroundMap():
+class UndergroundMap:
 
     def __init__(self):
         # initialise the graph
@@ -14,7 +13,7 @@ class UndergroundMap():
         self.stations = {}
 
     def create_data_base(self, path):
-        # read the data from excel
+        # read the data from Excel
         self.data_set = pd.read_excel(path)
 
         # initialise the dict for indexes as well as it's place in the dict
@@ -32,8 +31,8 @@ class UndergroundMap():
             if station2 not in indexes:
                 indexes[station2] = place
                 place += 1
-            weight = row[3] + 5  # Increase the weight by a constant of 5 which penalises the uses of more edges and
-            # thus search algorithm finds the smallest number of nodes visited rather the shortest distance
+            weight = row[3] + 5  # Increase the weight by a constant of 5 which penalises the use of more edges and
+            # thus search algorithm finds the smallest number of nodes visited rather the shortest distance.
 
             # check if the edge between two stations already exists, if not, create
             if not self.graph.has_edge(indexes[station1], indexes[station2]):
@@ -54,29 +53,8 @@ def get_user_input():
 
 
 def get_number_of_stations():
-    # This part is to trace back on itself to find the number of stations between the start and end stations
-    # It basically uses the predecessors returned by the bellman ford algorithm.
-    # it starts by getting the position of the end station's predecessor
-    # it then uses a do while loop to get the predecessor of the next station.
-    # This keeps looping until the start station is reached.
-    new_pos = pi[pos_of_station[end_station]]
-    list_of_previous = []
-
-    while True:  # using a do while loop
-
-        if new_pos != pos_of_station[start_station]:  # check if the trace back as reached the starting station
-            # list out keys and values separately
-            key_list = list(pos_of_station.keys())
-            val_list = list(pos_of_station.values())
-
-            position = val_list.index(new_pos)
-            list_of_previous.append((key_list[position]))  # create a list of previous stations
-
-            new_pos = pi[pos_of_station[key_list[position]]]
-            continue
-        else:
-            break
-    return len(list_of_previous) + 1
+    list_of_previous = get_list_previous()
+    return len(list_of_previous)
 
 
 def get_list_previous():
@@ -106,15 +84,16 @@ def get_list_previous():
 
 
 if __name__ == "__main__":
+    start_station, end_station = get_user_input()  # get the start station and end station from user
+
+    start = time.time()
+
     map = UndergroundMap()  # Creating an instance of the UndergroundMap class from Graph.py
     map.create_data_base('London Underground data.xlsx')  # Load data into the graph from the provided Excel file
     london_underground_graph = map.get_graph()  # Get the graph representing the London Underground
     pos_of_station = map.get_station_indexes()  # get the dict of stations positions within the index
     graph = map.get_graph()
-    print(graph)
-    start_station, end_station = get_user_input()  # get the start station and end station from user
 
-    start = time.time()
     d, pi, cycle = bellman_ford(london_underground_graph, pos_of_station[start_station])  # use the bellman ford
     # search algorithm to find the shortest path to every single station
 
@@ -125,5 +104,3 @@ if __name__ == "__main__":
 
     end = time.time()
     print(f'The time taken is {end - start}')
-
-    plt.show()
