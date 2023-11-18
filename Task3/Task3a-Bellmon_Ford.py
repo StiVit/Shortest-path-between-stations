@@ -11,6 +11,12 @@ class UndergroundMap:
         self.graph = AdjacencyListGraph(280, directed=False, weighted=True)
         # initialise the station_index dictionary
         self.stations = {}
+        self.weight = 1
+        # This allows for the Bellman ford algorithm to prioritise the smallest number of stations traversed. So for
+        # example say Station A to B is 10 stops long but originally 15 in total weight and another route via station
+        # C is 6 stops long but 20 in total weight. Bellman ford will find a route from A to B via the normal route.
+        # However, when changing all weights to 1, the Bellman Ford Algorithm will now find Station A to B via C as
+        # the 6 stops have less weight (6 < 10) and thus should output this.
 
     def create_data_base(self, path):
         # read the data from Excel
@@ -31,12 +37,11 @@ class UndergroundMap:
             if station2 not in indexes:
                 indexes[station2] = place
                 place += 1
-            weight = row[3] + 5  # Increase the weight by a constant of 5 which penalises the use of more edges and
-            # thus search algorithm finds the smallest number of nodes visited rather the shortest distance.
+            weight = row[3]
 
             # check if the edge between two stations already exists, if not, create
             if not self.graph.has_edge(indexes[station1], indexes[station2]):
-                self.graph.insert_edge(indexes[station1], indexes[station2], weight=weight)
+                self.graph.insert_edge(indexes[station1], indexes[station2], weight=self.weight)
         self.stations = indexes
 
     def get_graph(self):
