@@ -8,7 +8,7 @@ class UndergroundMap:
 
     def __init__(self):
         # initialise the graph
-        self.graph = AdjacencyListGraph(280, directed=False, weighted=True)
+        self.graph = AdjacencyListGraph(270, directed=False, weighted=True)
         # initialise the station_index dictionary
         self.stations = {}
         self.weight = 1
@@ -27,13 +27,13 @@ class UndergroundMap:
         place = 0
         # iterate through each of the rows in the data set
         for index, row in self.data_set.iterrows():
-            station1 = row[1]
+            station1 = row[1].strip()
 
             # check if the stations already have an index
             if station1 not in indexes:
                 indexes[station1] = place
                 place += 1
-            station2 = row[2]
+            station2 = row[2].strip()
             if station2 not in indexes:
                 indexes[station2] = place
                 place += 1
