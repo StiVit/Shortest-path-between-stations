@@ -1,4 +1,4 @@
-from Grapth import UndergroundMap
+from Graph import UndergroundMap
 from bellman_ford import bellman_ford
 import matplotlib.pyplot as plt
 

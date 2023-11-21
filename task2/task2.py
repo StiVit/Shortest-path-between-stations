@@ -1,5 +1,5 @@
 from bfs import bfs
-from Grapth import UndergroundMap
+from Graph import UndergroundMap
 import matplotlib.pyplot as plt
 
 

@@ -1,5 +1,5 @@
 from single_source_shortest_paths import initialize_single_source
-from Grapth import UndergroundMap
+from Graph import UndergroundMap
 from dijkstra import dijkstra
 import matplotlib.pyplot as plt
 
@@ -10,6 +10,7 @@ if __name__ == "__main__":
     map.create_data_base('../London Underground data.xlsx')
     graph = map.get_graph()
     stations = map.get_station_indexes()
+    print(stations)
 
     start_station_name = input('Introduce the stationA: ').strip()
     end_station_name = input('Introduce the stationB: ').strip()
