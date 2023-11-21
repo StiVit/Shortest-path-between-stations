@@ -3,19 +3,19 @@ from bellman_ford import bellman_ford
 import matplotlib.pyplot as plt
 
 def task3(stationA, stationB):
-    grapth = UndergroundMap()
-    grapth.create_data_base('../London Underground data.xlsx')
-    stations = grapth.get_station_indexes()
-    grapth = grapth.get_graph()
+    map = UndergroundMap()
+    map.create_data_base('../London Underground data.xlsx')
+    stations = map.get_station_indexes()
+    graph = map.get_graph()
 
-    durations, predecessors, no_negative_cycle = bellman_ford(grapth, stations[stationA])
+    durations, predecessors, no_negative_cycle = bellman_ford(graph, stations[stationA])
 
     print(durations[stations[stationB]])
 
     # Calculate and plot the histogram of journey times between station pairs
     all_durations = []
     for start_station in stations.values():
-        durations, pi, no_negative_cycle = bellman_ford(grapth, start_station)
+        durations, pi, no_negative_cycle = bellman_ford(graph, start_station)
         for duration in durations:
             all_durations.append(duration)
 
@@ -30,5 +30,7 @@ def task3(stationA, stationB):
 
 
 if __name__ == '__main__':
-    task3('Tottenham Court Road', 'Barking')
+    stationA = input('Introduce the stationA: ').strip()
+    stationB = input('Introduce the stationB: ').strip()
+    task3(stationA, stationB)
 

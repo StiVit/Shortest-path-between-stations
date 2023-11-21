@@ -28,7 +28,7 @@ class UndergroundMap():
             if station2 not in indexes:
                 indexes[station2] = place
                 place += 1
-            weight = row[3]
+            weight = int(row[3])
 
             # chech if the edge between two stations already exists, if not, create
             if not self.graph.has_edge(indexes[station1], indexes[station2]):
@@ -49,4 +49,4 @@ if __name__ == '__main__':
 
 
     print(graph)
-    print('Morden' in stations)
+    print(stations)

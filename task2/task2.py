@@ -8,29 +8,27 @@ def min_edges_between_nodes(g, start, end):
     if distances[end] == float('inf'):
         # If end is not reachable from start_node
         return None
+    return distances[end]
 
-    min_edges = distances[end]
-    return min_edges
 
 if __name__ == '__main__':
     map = UndergroundMap()
     map.create_data_base('../London Underground data.xlsx')
     grapth = map.get_graph()
     stations = map.get_station_indexes()
-    source_node = 'West Ham'  # Replace with the actual index of the start node
-    end_node = 'Barking'  # Replace with the actual index of the end node
+    stationA = input('Introduce the stationA: ').strip()
+    stationB = input('Introduce the stationB: ').strip()
 
-
-    min_edges = min_edges_between_nodes(grapth, stations[source_node] ,stations[end_node])
+    min_edges = min_edges_between_nodes(grapth, stations[stationA] ,stations[stationB])
 
     if min_edges is not None:
-        print(f"Minimum number of edges between {source_node} and {end_node}: {min_edges}")
+        print(f"Minimum number of edges between {stationA} and {stationB}: {min_edges}")
     else:
-        print(f"There is no path from {source_node} to {end_node}")
+        print(f"There is no path from {stationA} to {stationB}")
 
     all_durations = []
     for start_station in stations.values():
-        for end_station in  stations.values():
+        for end_station in stations.values():
             min_edges = min_edges_between_nodes(grapth, start_station, end_station)
             if min_edges is not None:
                 all_durations.append(min_edges)
