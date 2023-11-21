@@ -1,4 +1,3 @@
-from single_source_shortest_paths import initialize_single_source
 from Graph import UndergroundMap
 from dijkstra import dijkstra
 import matplotlib.pyplot as plt
