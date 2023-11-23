@@ -1,9 +1,8 @@
 from Graph import UndergroundMap
-from dijkstra import dijkstra
+from Dijkstra import dijkstra
 import matplotlib.pyplot as plt
 
-
-if __name__ == "__main__":
+def task1():
     # Create the UndergroundMap and read the station data
     map = UndergroundMap()
     map.create_data_base('../London Underground data.xlsx')
@@ -33,3 +32,7 @@ if __name__ == "__main__":
     plt.title('Distribution of Journey Times between Station Pairs')
     plt.grid(True)
     plt.show()
+
+
+if __name__ == "__main__":
+    task1()

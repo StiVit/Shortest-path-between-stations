@@ -30,7 +30,7 @@
 #                                                                       #
 #########################################################################
 
-from heap_priority_queue import HeapPriorityQueue
+from task1.heap_priority_queue import HeapPriorityQueue
 
 
 class MinHeapPriorityQueue(HeapPriorityQueue):
