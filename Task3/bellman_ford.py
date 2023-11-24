@@ -65,32 +65,6 @@ def bellman_ford(G, s):
 	return d, pi, True
 
 
-def create_data_base(self, path):
-	# read the data from excel
-	self.data_set = pd.read_excel(path)
-
-	# initialise the dict for indexes as well as it's place in the dict
-	indexes = {}
-	place = 0
-	# iterate through each of the rows in the data set
-	for index, row in self.data_set.iterrows():
-		station1 = row[1]
-
-		# check if the stations already have an index
-		if station1 not in indexes:
-			indexes[station1] = place
-			place += 1
-		station2 = row[2]
-		if station2 not in indexes:
-			indexes[station2] = place
-			place += 1
-		weight = row[3]
-
-		# check if the edge between two stations already exists, if not, create
-		if not self.graph.has_edge(indexes[station1], indexes[station2]):
-			self.graph.insert_edge(indexes[station1], indexes[station2], weight=weight)
-	self.stations = indexes
-
 # Testing
 if __name__ == "__main__":
 
