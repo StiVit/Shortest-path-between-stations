@@ -1,10 +1,13 @@
 from mst import kruskal
 from Graph import UndergroundMap
 from task1.Dijkstra import dijkstra
+from datetime import datetime
 import matplotlib.pyplot as plt
 
 def task4(G, stations):
+    start = datetime.now()
     optimised_graph = kruskal(G)
+    print(f'MST made in: {datetime.now() - start}')
     edges_optimised = optimised_graph.get_edge_list()
     edges_main = G.get_edge_list()
     keys = list(stations.keys())
@@ -19,9 +22,9 @@ def task4(G, stations):
         for duration in durations:
             all_durations.append(duration)
 
+    draw_histogram(all_durations)
 
-    # After optimisation the journey times between station pairs became more equilibrated, but in exchange we got some longer
-    # journeys, maximum time for the full graph was about 105 minutes, but after getting the mst we got times of 115 minutes
+def draw_histogram(all_durations):
     plt.figure(figsize=(8, 6))
     plt.hist(all_durations, bins=20, color='skyblue')
     plt.xlabel('Journey Durations (minutes)')
@@ -29,7 +32,6 @@ def task4(G, stations):
     plt.title('Distribution of Journey Times between Station Pairs After Optimising')
     plt.grid(True)
     plt.show()
-
 
 if __name__ == '__main__':
     graph = UndergroundMap()
