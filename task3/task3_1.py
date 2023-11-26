@@ -10,7 +10,7 @@ def task3(stationA, stationB):
 
     durations, predecessors, no_negative_cycle = bellman_ford(graph, stations[stationA])
 
-    print(durations[stations[stationB]])
+    print(f'SHortest path between stations: {durations[stations[stationB]]}')
 
     # Calculate and plot the histogram of journey times between station pairs
     all_durations = []
